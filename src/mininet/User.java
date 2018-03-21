@@ -1,98 +1,145 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mininet;
-
 import java.util.*;
-
 /**
  *
- * @author xinyuye
+ * @author Xinyu YE s3468489
  */
-public abstract class User 
+public abstract class User
 {
-        private String name, userName, dateOfBirth, photoPath;
-        private String password, status;
-
-        private List<User> connections;
-
-        public User(String name, String userName, String dateOfBirth, String password)
-        {
-            this.name = name;
-            this.userName = userName;
-            this.dateOfBirth = dateOfBirth;
-            this.password = password;
-            status = null;
-            photoPath = null;
-            connections = new ArrayList<User>();
-        }
+    private String name, userName, status, photoPath;
     
-        public String getName()
-        {
-            return name;
-        }
+    private int age;
     
-    	
-	public void setName(String name) 
-        {
-		this.name = name;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) 
-        {
-		this.userName = userName;
-	}
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
-	public void setDateOfBirth(String dateOfBirth) 
-        {
-		this.dateOfBirth = dateOfBirth;
-	}
-	public String getPassword() 
-        {
-		return password;
-	}
-	public void setPassword(String password) 
-        {
-		this.password = password;
-	}
-		
-	public String getPhotoPath() 
-        {
-		return photoPath;
-	}
-	public void setPhotoPath(String photoPath) 
-        {
-		this.photoPath = photoPath;
-	}
-	public String getStatus() 
-        {
-		return status;
-	}
-	public void setStatus(String status) 
-        {
-		this.status = status;
-	}
+    private List<User> connections;
+    
+    public User(String name, String userName, int age)
+    {
+        this.name = name;
+        this.userName = userName;
+        this.age = age;
         
-        public List<User> getConnections()
+       /*
+        The following three fields have been set to be null
+        by default,
+        because they are optional for a user as instructed in the
+        assignment specification
+        */
+        status = null;
+        photoPath = null;
+        connections = null;
+    }
+    
+    public String getName()
+    {
+        return name;
+    }
+      
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+    
+    public String getUserName() 
+    {
+        return userName;
+    }
+    
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
+    }
+    public int getAge() 
+    {
+        return age;
+    }
+    
+    public void setAge(int age)
+    {
+        this.age = age;
+    }
+    
+    public String getPhotoPath()
+    {
+        return photoPath;
+    }
+    
+    public void setPhotoPath(String photoPath)
+    {
+        this.photoPath = photoPath;
+    }
+    
+    public String getStatus()
+    {
+        return status;
+    }
+    
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+    
+    public List<User> getConnections()
+    {
+        return connections;
+    }
+    
+    /* Only when a particular user start to connect to other
+       users, they will have a connections list
+    */
+    public void setConnections(List<User> connections)
+    {
+        this.connections = connections;
+    }
+    
+    //we treat the literal meanign of adding a person
+    //into the network as following a user's profile
+    public void followUser(User u)
+    {
+        this.connections.add(u);
+    }
+    
+    //we treat the literal meanign of deleting the
+    //selected person as unfollowing a user's profile
+    public void unfollowUser(User u)
+    {
+        this.connections.remove(u);
+    }
+    
+    public String retrieveProfile()
+    {
+        boolean hasConnections = false;
+        
+        if(!connections.isEmpty())
+            hasConnections = true;
+        
+        StringBuffer retrieval = new StringBuffer();
+        if(this instanceof Adult)
+            retrieval.append("\nAdult");
+        else
+            retrieval.append("\nDependent");
+        
+        retrieval.append("\nname: ")
+                 .append(this.name)
+                 .append("\nUsername: ")
+                 .append(this.userName)
+                 .append("\nStatus: ")
+                 .append(this.status)
+                 .append("\nProfile Photo: ")
+                 .append(this.photoPath);
+        
+        /*
+        The retrieved profile will display its connections
+        only when the selected user is connected to other
+        users.
+        */
+        if(hasConnections == true)
         {
-            return connections;
-        }
-        
-        public void followUser(User u)
-        {
-            this.connections.add(u);
-        }
-        
-        public void unfollowUser(User u)
-        {
-            this.connections.remove(u);
-        }
-        
-        
+            retrieval.append("\nConnections: ");
+            for (User u : connections) 
+            {
+                retrieval.append("\n").append(u.getName());
+            }
+        }     
+        return retrieval.toString();             
+    }
 }
