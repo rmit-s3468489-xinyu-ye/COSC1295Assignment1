@@ -1,24 +1,35 @@
 package mininet;
 /**
  *
- * @author Xinyu YE s3468489
+ * @author Yifan ZHANG s3615625
  */
 public interface Interaction
 {
-    public abstract User listEveryOne();
+    public static final int EXIT = 0,
+            
+                            LIST_EVERYONE = 1,
+            
+                            ADD_USER = 2,
+                            
+                            SELECT_USER = 3,
+                            
+                            DISPLAY_SELECTED_PROFILE = 4,
+            
+                            UPDATE_SELECTED_PROFILE = 5,
+            
+                            DELETE_SELECTED_USER = 6,
+                            
+                            CONNECT_TWO_USERS = 7,
+                                    
+                            QUERY_FRIENDSHIP = 8,
+                            
+                            QUERY_PARENT_CHILD_RELATIONSHIP = 9,
+                                    
+                            BACK_TO_MAIN_MENU = 10,
     
-    public abstract User selectAUser();
-    
-    public abstract User displayProfile();
-    
-    public abstract User updateProfile();
-    
-    //We treat the function of connecting two Users as one
-    //User follow a selected User's profile
-    public abstract User followAUser();
-    
-    //We treat the deleting function as unfollow Users' profiles
-    public abstract User unfollowAUser();
-    
-    public abstract User findOutConnections();
+                            FRIENDSHIP = 11,
+            
+                            SPOUSE_RELATIONSHIP = 12,
+            
+                            PARENT_CHILD_RELATIONSHIP = 13;                          
 }

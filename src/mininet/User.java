@@ -6,16 +6,15 @@ import java.util.*;
  */
 public abstract class User
 {
-    private String name, userName, status, photoPath;
+    private String name, status, photoPath;
     
     private int age;
     
     private List<User> connections;
     
-    public User(String name, String userName, int age)
+    public User(String name, int age)
     {
         this.name = name;
-        this.userName = userName;
         this.age = age;
         
        /*
@@ -39,15 +38,6 @@ public abstract class User
         this.name = name;
     }
     
-    public String getUserName() 
-    {
-        return userName;
-    }
-    
-    public void setUserName(String userName)
-    {
-        this.userName = userName;
-    }
     public int getAge() 
     {
         return age;
@@ -93,14 +83,14 @@ public abstract class User
     
     //we treat the literal meanign of adding a person
     //into the network as following a user's profile
-    public void followUser(User u)
+    public void addUser(User u)
     {
         this.connections.add(u);
     }
     
     //we treat the literal meanign of deleting the
     //selected person as unfollowing a user's profile
-    public void unfollowUser(User u)
+    public void deleteUser(User u)
     {
         this.connections.remove(u);
     }
@@ -120,8 +110,6 @@ public abstract class User
         
         retrieval.append("\nname: ")
                  .append(this.name)
-                 .append("\nUsername: ")
-                 .append(this.userName)
                  .append("\nStatus: ")
                  .append(this.status)
                  .append("\nProfile Photo: ")

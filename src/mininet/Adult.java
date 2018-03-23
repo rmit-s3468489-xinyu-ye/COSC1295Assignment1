@@ -10,9 +10,9 @@ public class Adult extends User
     
     private List<Dependent> children;
     
-    public Adult(String name, String userName, int age)
+    public Adult(String name, int age)
     {
-        super(name, userName, age);
+        super(name, age);
         
         spouse = null;
         

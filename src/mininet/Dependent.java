@@ -17,10 +17,10 @@ public class Dependent extends User
     */
     private boolean isThreeYearsOld;
     
-    public Dependent(String name, String userName, int age, Adult[] parents,
+    public Dependent(String name, int age, Adult[] parents,
             boolean isThreeYearsOld)
     {
-        super(name, userName, age);
+        super(name, age);
         
         this.parents = parents;
         
