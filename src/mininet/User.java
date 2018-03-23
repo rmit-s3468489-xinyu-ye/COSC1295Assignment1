@@ -12,8 +12,9 @@ public abstract class User
     
     private int age;
     
+
     private List<User> friends;
-    
+  
     public User() {
     	friends = new ArrayList<User>();
     }
@@ -90,12 +91,16 @@ public abstract class User
         this.mother = mother;
     }
     
+
     public String getChild1()
+
     {
         return child1;
     }
     
+
     public void setChild1(String child1)
+
     {
         this.child1 = child1;
     }

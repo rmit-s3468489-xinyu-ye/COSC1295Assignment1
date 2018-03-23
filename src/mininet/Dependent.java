@@ -15,16 +15,16 @@ public class Dependent extends User
     is less than 3 years-old
     respectively
     */
-    private boolean isThreeYearsOld;
+    private boolean TwoYearsOldOrYounger;
     
     public Dependent(String name, int age, Adult[] parents,
-            boolean isThreeYearsOld)
+            boolean TwoYearsOldOrYounger)
     {
         super(name, age);
         
         this.parents = parents;
         
-        this.isThreeYearsOld = isThreeYearsOld;
+        this.TwoYearsOldOrYounger = TwoYearsOldOrYounger;
     }
       
     public Adult[] getParents()
@@ -37,13 +37,13 @@ public class Dependent extends User
         this.parents = parents;
     }
     
-    public boolean isThreeYearsOld()
+    public boolean TwoYearsOldOrYounger()
     {
-        return isThreeYearsOld;
+        return TwoYearsOldOrYounger;
     }
     
-    public void setThreeYearsOld(boolean isThreeYearsOld)
+    public void setThreeYearsOld(boolean TwoYearsOldOrYounger)
     {
-        this.isThreeYearsOld = isThreeYearsOld;
+        this.TwoYearsOldOrYounger = TwoYearsOldOrYounger;
     }   
 }
