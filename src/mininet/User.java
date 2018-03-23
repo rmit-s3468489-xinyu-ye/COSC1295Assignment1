@@ -1,31 +1,33 @@
 package mininet;
 import java.util.*;
+
+import com.sun.xml.internal.fastinfoset.util.StringArray;
 /**
  *
  * @author Xinyu YE s3468489
  */
 public abstract class User
 {
-    private String name, status, photoPath;
+    private String name, photoPath, status, father, mother, child1, child2;
     
     private int age;
     
-    private List<User> connections;
+    private List<User> friends;
     
-    public User(String name, int age)
+    public User() {
+    	friends = new ArrayList<User>();
+    }
+    public User(String name, int age, String photoPath, String status, 
+    		String father, String mother, String child1, String child2)
     {
         this.name = name;
         this.age = age;
-        
-       /*
-        The following three fields have been set to be null
-        by default,
-        because they are optional for a user as instructed in the
-        assignment specification
-        */
-        status = null;
-        photoPath = null;
-        connections = null;
+        this.photoPath = photoPath;
+        this.status = status;
+        this.father = father;
+        this.mother = mother;
+        this.child1 = child1;
+        this.child2 = child2;
     }
     
     public String getName()
@@ -47,6 +49,16 @@ public abstract class User
     {
         this.age = age;
     }
+        
+    public String getStatus()
+    {
+        return status;
+    }
+    
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
     
     public String getPhotoPath()
     {
@@ -58,76 +70,98 @@ public abstract class User
         this.photoPath = photoPath;
     }
     
-    public String getStatus()
+    public String getFather()
     {
-        return status;
+        return father;
     }
     
-    public void setStatus(String status)
+    public void setFather(String father)
     {
-        this.status = status;
+        this.father = father;
     }
     
-    public List<User> getConnections()
+    public String getMother()
     {
-        return connections;
+        return mother;
     }
     
-    /* Only when a particular user start to connect to other
-       users, they will have a connections list
-    */
-    public void setConnections(List<User> connections)
+    public void setMother(String mother)
     {
-        this.connections = connections;
+        this.mother = mother;
     }
     
-    //we treat the literal meanign of adding a person
-    //into the network as following a user's profile
-    public void addUser(User u)
+    public String getChild1()
     {
-        this.connections.add(u);
+        return child1;
     }
     
-    //we treat the literal meanign of deleting the
-    //selected person as unfollowing a user's profile
-    public void deleteUser(User u)
+    public void setChild1(String child1)
     {
-        this.connections.remove(u);
+        this.child1 = child1;
     }
     
-    public String retrieveProfile()
+    public String getChild2()
     {
-        boolean hasConnections = false;
+        return child2;
+    }
+    
+    public void setChild2(String child2)
+    {
+        this.child2 = child2;
+    }
+    
+    public List<User> getFriends()
+    {
+        return friends;
+    }
+    
+    public void addFriends(User u) {
+        this.friends.add(u);
+    }
+    
+    public void deleteFriends(User u) {
+    
+        this.friends.remove(u);
+    }
+    
+    public String selectUser()
+    {
+        boolean hasFriends = false;
         
-        if(!connections.isEmpty())
-            hasConnections = true;
+        if(!friends.isEmpty())
+            hasFriends = true;
         
         StringBuffer retrieval = new StringBuffer();
-        if(this instanceof Adult)
-            retrieval.append("\nAdult");
-        else
-            retrieval.append("\nDependent");
         
         retrieval.append("\nname: ")
                  .append(this.name)
+                 .append("\nprofile: ")
+                 .append(this.photoPath)
+                 .append("\nage: ")
+                 .append(this.age)
                  .append("\nStatus: ")
-                 .append(this.status)
-                 .append("\nProfile Photo: ")
-                 .append(this.photoPath);
+                 .append(this.status);
         
-        /*
-        The retrieved profile will display its connections
-        only when the selected user is connected to other
-        users.
-        */
-        if(hasConnections == true)
-        {
-            retrieval.append("\nConnections: ");
-            for (User u : connections) 
-            {
-                retrieval.append("\n").append(u.getName());
+        if (this.father != null)
+        	retrieval.append("\nparents: ")
+        	         .append(this.father)
+        	         .append("\t")
+        	         .append(this.mother);
+        
+        if (this.child1 != null)
+        	retrieval.append("\nchildren: ")
+        			 .append(this.child1)
+        			 .append("\t");
+        if (this.child2 != null)
+        	retrieval.append(this.child1);
+        
+        if (hasFriends = true) {
+        	retrieval.append("\ntfriend(s):");
+        	for (User u : friends)
+        		retrieval.append("\t").append(u.getName());
             }
-        }     
-        return retrieval.toString();             
+            	
+        return retrieval.toString();
+            	      	          
     }
 }
