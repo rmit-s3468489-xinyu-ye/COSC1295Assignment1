@@ -23,8 +23,8 @@ public class Driver
 
     public void listEveryOne()
     {
-        StringBuffer retrieval = 
-        		new StringBuffer("\nThe existed members in this network: \n");
+        StringBuffer retrieval =
+                new StringBuffer("\nThe existed members in this network: \n");
 
         for (User u : sns)
         {
@@ -34,9 +34,21 @@ public class Driver
     }
 
 
+    public void retrieveProfile()
+    {
+        if(selectedUser == null)
+            System.out.println("Please select a user to retrieve the profile");
+        else if (selectedUser instanceof Adult)
+            System.out.println((Adult)selectedUser);
+        else
+            System.out.println((Dependent)selectedUser);
+    }
+
+
     public void addUser(String name, int age)
     {
         boolean isExisted = false;
+
     }
 
     public void selectUser(String name)
@@ -44,16 +56,20 @@ public class Driver
         if (isUserExisted(name))
         {
             selectedUser = getUserByName(name);
-            System.out.println("You have selected " + name + "");
+            System.out.println("You have selected " + name + "as the target user");
+        }
+        else
+        {
+            System.out.println("This user does not exist.");
         }
     }
 
     private void AddDependent(String name, int age,
-                              boolean TwoYearsOldOrYounger, 
+                              boolean TwoYearsOldOrYounger,
                               String fatherName, String motherName)
     {
         User u1 = null, u2 = null;
-        
+
         boolean isExisted = isUserExisted(name),
                 isFatherExisted = isUserExisted(fatherName),
                 isMotherExisted = isUserExisted(motherName);
@@ -72,7 +88,7 @@ public class Driver
 
             if (u1 instanceof Dependent || u2 instanceof Dependent)
                 System.out.println("Failed to add this dependent as a user, "
-                		+ "dependents cannot be their peers' parents.");
+                        + "dependents cannot be their peers' parents.");
             else
             {
                 parents[0] = (Adult)u1;
@@ -84,7 +100,7 @@ public class Driver
                 //of corresponding adult users
                 for(Adult parent : parents)
                     parent.addChildren(d);
-                
+
                 System.out.println("This dependent is added successfully");
             }
         }
@@ -100,13 +116,13 @@ public class Driver
         if ((!isExisted) && (age > 16))
         {
             User adult = new Adult(name,age);
-            
+
             sns.add(adult);
-               
+
             System.out.println("This adult is successfully added.");
         }
         else if (isExisted)
-            System.out.println("This adult is already existed in the network!");    
+            System.out.println("This adult is already existed in the network!");
         else
             System.out.println("The user to be added is an underage, "
                     + " thus cannot be added as an adult");
@@ -135,7 +151,7 @@ public class Driver
     }
 
 
-    private boolean followFriends(User u1, User u2)
+    private boolean makeFriends(User u1, User u2)
     {
         boolean eligible = false;
         boolean completed;
