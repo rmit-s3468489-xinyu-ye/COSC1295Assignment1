@@ -11,6 +11,7 @@ public abstract class User
     private int age;
     
     private List<User> connections;
+   
     
     public User(String name, int age)
     {
@@ -83,14 +84,14 @@ public abstract class User
     
     //we treat the literal meanign of adding a person
     //into the network as following a user's profile
-    public void addUser(User u)
+    public void addFriend(User u)
     {
         this.connections.add(u);
     }
     
     //we treat the literal meanign of deleting the
     //selected person as unfollowing a user's profile
-    public void deleteUser(User u)
+    public void deleteFriend(User u)
     {
         this.connections.remove(u);
     }
