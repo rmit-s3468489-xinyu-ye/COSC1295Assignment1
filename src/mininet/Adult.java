@@ -5,45 +5,41 @@ import java.util.*;
  * @author Xinyu YE s3468489
  */
 public class Adult extends User
-{
-    private Adult spouse;
+{  
+    private List<Dependent> child;     
     
-    private List<Dependent> children;
+    public Adult (String name, int age, String photoPath, String status, String father, String mother) {
+    	
+        super(name, age, photoPath, status, father, mother);
+        child = new ArrayList<Dependent>();        
+    }    
     
-    public Adult(String name, int age)
+    public List<Dependent> getChild()
     {
-        super(name, age);
-        
-        spouse = null;
-        
-        children = null;
-        
+        return child;
     }
     
-    public Adult getSpouse()
+    public void setChild(List<Dependent> child)
     {
-        return spouse;
+        this.child = child;
     }
     
-    public void setSpouse(Adult spouse)
-    {
-        this.spouse = spouse;
+    @Override
+    public String toString(){
+        boolean hasChild = child.isEmpty();
+        String changeAdultInfo = super.selectUser();
+
+        StringBuilder result = new StringBuilder(changeAdultInfo);
+
+        if (hasChild) {
+            result.append("\nchild:");
+            for (Dependent Dependent : child)
+                result.append("\n").append(Dependent.getName());
+        }
+        result.append("\n");
+
+        return result.toString();
+
     }
-    
-    public List<Dependent> getChildren()
-    {
-        return children;
-    }
-    
-    public void setChildren(List<Dependent> children)
-    {
-        this.children = children;
-    }
-    
-    public void addChildren(Dependent child)
-    {
-        children.add(child);
-    }
-    
     
 }

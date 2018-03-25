@@ -5,45 +5,30 @@ package mininet;
  */
 public class Dependent extends User
 {
-    //As instructed in the assignment specification,
-    //a dependent must have 2 parents exactly,
-    //assuming there are no orphans or dependents
-    //who have a single parent
-    private Adult parents[];
     /*
     The ollowing field judges whether a particular dependent
     is less than 3 years-old
     respectively
     */
-    private boolean TwoYearsOldOrYounger;
+    private boolean underTwoYears;
     
-    public Dependent(String name, int age, Adult[] parents,
-            boolean TwoYearsOldOrYounger)
+    public Dependent(String name, int age, String photoPath, String status, String father, String mother,
+            boolean underTwoYears)
     {
-        super(name, age);
+        super(name, age, photoPath, status, father, mother);        
         
-        this.parents = parents;
-        
-        this.TwoYearsOldOrYounger = TwoYearsOldOrYounger;
-    }
-      
-    public Adult[] getParents()
+        this.underTwoYears = underTwoYears;
+    }     
+    
+    public boolean underTwoYears()
     {
-        return parents;
+        return underTwoYears;
     }
     
-    public void setParents(Adult[] parents)
+    public void setThreeYearsOld(boolean underTwoYears)
     {
-        this.parents = parents;
+        this.underTwoYears = underTwoYears;
     }
-    
-    public boolean TwoYearsOldOrYounger()
-    {
-        return TwoYearsOldOrYounger;
-    }
-    
-    public void setThreeYearsOld(boolean TwoYearsOldOrYounger)
-    {
-        this.TwoYearsOldOrYounger = TwoYearsOldOrYounger;
-    }   
+
+	
 }

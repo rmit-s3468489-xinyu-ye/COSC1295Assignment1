@@ -8,18 +8,17 @@ import com.sun.xml.internal.fastinfoset.util.StringArray;
  */
 public abstract class User
 {
-    private String name, photoPath, status, father, mother, child1, child2;
+    String name, photoPath, status, father, mother;
     
-    private int age;
-    
+    int age;
 
-    private List<User> friends;
+    List<User> friends;
   
     public User() {
     	friends = new ArrayList<User>();
     }
     public User(String name, int age, String photoPath, String status, 
-    		String father, String mother, String child1, String child2)
+    		String father, String mother)
     {
         this.name = name;
         this.age = age;
@@ -27,8 +26,7 @@ public abstract class User
         this.status = status;
         this.father = father;
         this.mother = mother;
-        this.child1 = child1;
-        this.child2 = child2;
+        
     }
     
     public String getName()
@@ -91,29 +89,6 @@ public abstract class User
         this.mother = mother;
     }
     
-
-    public String getChild1()
-
-    {
-        return child1;
-    }
-    
-
-    public void setChild1(String child1)
-
-    {
-        this.child1 = child1;
-    }
-    
-    public String getChild2()
-    {
-        return child2;
-    }
-    
-    public void setChild2(String child2)
-    {
-        this.child2 = child2;
-    }
     
     public List<User> getFriends()
     {
@@ -131,10 +106,7 @@ public abstract class User
     
     public String selectUser()
     {
-        boolean hasFriends = false;
-        
-        if(!friends.isEmpty())
-            hasFriends = true;
+    	boolean hasFriend = !friends.isEmpty();
         
         StringBuffer retrieval = new StringBuffer();
         
@@ -152,16 +124,9 @@ public abstract class User
         	         .append(this.father)
         	         .append("\t")
         	         .append(this.mother);
-        
-        if (this.child1 != null)
-        	retrieval.append("\nchildren: ")
-        			 .append(this.child1)
-        			 .append("\t");
-        if (this.child2 != null)
-        	retrieval.append(this.child1);
-        
-        if (hasFriends = true) {
-        	retrieval.append("\ntfriend(s):");
+
+        if (hasFriend) {
+        	retrieval.append("\ntfriends:");
         	for (User u : friends)
         		retrieval.append("\t").append(u.getName());
             }
