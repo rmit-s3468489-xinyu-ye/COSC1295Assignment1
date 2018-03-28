@@ -1,30 +1,22 @@
 package mininet;
 /**
  *
- * @author Yifan ZHANG s3615625
+ * @author Xinyu YE s3468489
  */
-public interface Interaction 
-{
-    //MiniNet main menu
-    public static final int LISTMEMBERS = 1;
-    public static final int ADDUSER = 2;
-    public static final int SELECTUSER = 3;
-    public static final int CONNECTUSER = 4;
-    public static final int INQUIREFRIENDSHIP = 5;
-    public static final int FINDOUTCHILDREN = 6;
-    public static final int FINDOUTPARENTS = 7;
-    public static final int CHANGERELATIONSHIP = 8;
+public interface Interaction {
     public static final int EXIT = 0;
-    
-    //the selected user's submenu
-    public static final int DISPLAYPROFILE = 1;
-    public static final int UPDATEPROFILE = 2;
-    public static final int DELETEPROFILE = 3;
-    public static final int ADDFRIEND = 4;
-    public static final int DELETEFRIEND = 5;
-    public static final int CHANGESTATUS = 6;
-    public static final int FRIENDRELATIONSHIP = 7;
-    public static final int PARENTCHILDRELATIONSHIP = 8; 
-    public static final int SPOUSERELATIONSHIP = 9;
-    public static final int MAINMENU = 0;
+    public static final int LIST_EVERYBODY = 1;
+    public static final int ADD_PERSON = 2;
+    public static final int SELECT_USER=3;    
+    public static final int DELETE_USER= 4;
+      
+    public static final int BACK_MAIN = 0;
+    public static final int SET_PROFILE = 1;
+    public static final int MAKE_FRIEND = 2;
+    public static final int DEL_FRIEND = 3;
+    public static final int SET_COUPLE = 4;
+    public static final int SET_PARENTS = 5;
+    public static final int ADD_KIDS = 6;
+    public static final int CHANGE_STATUS = 7;   
 }
+
