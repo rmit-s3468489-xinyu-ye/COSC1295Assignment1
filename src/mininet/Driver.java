@@ -221,7 +221,7 @@ public class Driver {
             return;
             
         }else {
-            System.out.println("\nPlease enter the user's spuose's name: ");
+            System.out.println("\nPlease enter the user's spouse's name: ");
             String input = sc.nextLine();
             Adult user1;
             User user2;
@@ -260,9 +260,7 @@ public class Driver {
             }
         }
     }
-    
-    
-    
+      
     public void setParents() {
         if (selectedUser.age > 16) {
             System.out.println("\nAn adult is not required to set parents!");
