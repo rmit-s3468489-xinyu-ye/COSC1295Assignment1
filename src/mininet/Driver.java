@@ -9,62 +9,62 @@ import java.util.Scanner;
 public class Driver {
 
     private MenuOperation menuOperation;
-    private User selectedUser;                
-    private List<User> theMininet;
+    private User selectedPerson;                
+    private List<User> inMininet;
     private static Scanner sc;
 
     public Driver(MenuOperation menuOperation){
         this.menuOperation = menuOperation;
-        theMininet = FileOperation.readFromFile();
+        inMininet = FileOperation.readData();
         sc = new Scanner(System.in);
     }
     
-/***List existing members in MiniNet***/
+/***1. list every one***/
     
-    public void listMembers() {
+    public void listEveryone() {
         int counter = 1;
-        StringBuffer buffer = new StringBuffer("\n\tThe existing members in MiniNet:\n");
-        for (User u : theMininet){
-            buffer.append("\t").append(u.getName());
-//            if (counter++ % 4 == 0) 
-//                buffer.append("\n\t");
+        StringBuilder builder = new StringBuilder("\n\tcurrent people in the social network are:\n");
+        for (User u : inMininet){
+            builder.append("\t").append(u.getName());
+            if (counter++ % 4 == 0) 
+                builder.append("\n\t");
         }
-        System.out.println(buffer.toString());
+        System.out.println(builder.toString());
     }
     
 
-    public void selectUser() {
+    public void selectaUser() {
         String name;
-        System.out.print("\n\nPlease enter the user's name:");
-        name = sc.next();
-        String userInput;
+        System.out.print("\n\nplease enter the name:");
+        name = sc.nextLine();
+        String token;
         int option;
 
-        if (isUserExisted(name)) {
-            selectedUser = getUserByName(name);
+        if (isNameInNet(name)) {
+            selectedPerson = getUserByName(name);
 
-            if (selectedUser.age > 16) {
-                System.out.println((Adult)selectedUser);
+            if (selectedPerson.age > 16) {
+                System.out.println((Adult)selectedPerson);
             }else {
-                System.out.println((Dependent)selectedUser);
+                System.out.println((Dependent)selectedPerson);
                 }
             
- /***Display the sub menu every time when a certain user is selected successfully***/   
+ /***display the sub menu every time when select a user successfully***/   
             
-            MenuOperation.display(Interaction.SELECT_USER, selectedUser);
+            MenuOperation.display(Interaction.SELECT_USER, selectedPerson);
             
-            userInput = sc.next();
-            while(!userInput.matches("[0-7]")) {
+            token = sc.nextLine();
+            while(!token.matches("[0-7]")) {
                 System.out.print("\ninvaild input, please try again: ");
-                userInput = sc.next();
+                token = sc.nextLine();
             }
-            option = Integer.parseInt(userInput);
+            option = Integer.parseInt(token);
             
             while (option != 0) {
     	        switch (option){
     	        case Interaction.BACK_MAIN:	       
     	            break;
-    	        case Interaction.SET_PROFILE_PHOTO:
+    	        case Interaction.SET_PROFILE:
     	            setPhoto();
     	            break;
     	        case Interaction.MAKE_FRIEND:
@@ -73,13 +73,13 @@ public class Driver {
     	        case Interaction.DEL_FRIEND:
     	            delFriend();
     	            break;
-    	        case Interaction.SET_SPOUSE:
-    	            setSpouse();
+    	        case Interaction.SET_COUPLE:
+    	            setCouple();
     	        case Interaction.SET_PARENTS:
     	            setParents();
     	            break;
     	        case Interaction.ADD_KIDS:
-    	            addKids(null);
+    	            addKids();
     	            break;
     	        case Interaction.CHANGE_STATUS:
     	            changeStatus();
@@ -87,55 +87,61 @@ public class Driver {
     	        }
     	        
             
-            MenuOperation.display(Interaction.SELECT_USER, selectedUser);
-            option = Integer.parseInt(sc.next());
+            MenuOperation.display(Interaction.SELECT_USER, selectedPerson);
+            option = Integer.parseInt(sc.nextLine());
             }
 
         }else{
-            System.out.println("\n\nthis user is not in MiniNet");
+            System.out.println("\n\nthis person is not in the network");
         }
         System.out.println("modification have been done successfully!");
     }
     
     
-    public void addUser() {
-    	String name, photoPath, status, fatherName, motherName;
+    public void addPerson() {
+    	String name;
     	int age;
-
-    	String[] input;
-    	input = menuOperation.readAndCall(Interaction.ADD_USER);
-    	name = input[0];
-
-    	age = Integer.parseInt(input[1]);
-    	photoPath = input[2];
-    	status = input[3];
-
-    	if (age>16) {
-    		addAdult(name, age, photoPath, status);
-    	}else{
-    		fatherName = input[4];
-    		motherName = input[5];
-    		try {               
-    			addDependent(name, age, photoPath, status, fatherName, motherName);
-    		}catch (NumberFormatException e){
-    			System.out.println("\nThe age you input is invalid, failed to add this user.");
-    			return;
-    		}
-    	}
+        String photoPath;
+        String status;
+        String fatherName;
+        String motherName;
+ 
+        
+        String[] tokens;
+        tokens = menuOperation.readAndCall(Interaction.ADD_PERSON);
+        name = tokens[0];
+        
+        age = Integer.parseInt(tokens[1]);
+        photoPath = tokens[2];
+        status = tokens[3];
+       
+        if (age>16) {
+            addAdult(name, age, photoPath, status);
+        }else{
+        	fatherName = tokens[4];
+            motherName = tokens[5];
+            try {               
+                addDependent(name, age, photoPath, status, fatherName, motherName);
+            }catch (NumberFormatException e){
+                System.out.println("\na teen cannot be added without a valid age, oeration abort!");
+                return;
+            }
+        }
     }
     
     
     public void deleteUser() {
-    	System.out.println("\nPlease enter the user name you want to delete: ");
+    	System.out.println("\n please enter the user name you want to delete: ");
     	String input;
-    	input = sc.next();
-        if (!isUserExisted(input))
-            System.out.println("\nUser not found, please enter again: ");
+    	input = sc.nextLine();
+        if (!isNameInNet(input))
+            System.out.println("\n user not found, please enter again: ");
         else{
-	        	selectedUser = getUserByName(input);
-	        	theMininet.remove(selectedUser);
-	        	System.out.println("\nuser "+ selectedUser.name+ " is  successfully removed");
-	        	selectedUser = null;
+        	selectedPerson = getUserByName(input);
+            System.out.println("\nuser "+ selectedPerson.name+ " is removed");
+            System.out.println("deletion have been done successfully!");
+            inMininet.remove(selectedPerson);
+            selectedPerson = null;
         }
         return;
     }
@@ -143,75 +149,77 @@ public class Driver {
     
     public void setPhoto() {
     	   	
-    	System.out.println("\nPlease enter your photo path (for example: src/yourname.jpg)"
-    			+ "\nor enter 0 back to the main menu:");
-    	String input = sc.next();
-    	selectedUser.setPhotoPath(input);
+    	System.out.println("\n please input your photo path (for example: src/yourname.jpg)"
+    			+ "\nor enter 0 back to SubMenu:");
+    	String token = sc.nextLine();
+    	selectedPerson.setPhotoPath(token);
     	return;
     	
     }
    
     
     public void makeFriend() {
-    	System.out.println("please enter the user's name you want to add as a friend:");
-        String input = sc.next();
+    	System.out.println("please enter the user's name you want to add as friend:");
+        String tokens = sc.nextLine();
         
-        User u1,u2;
-        int age1, age2;
+        User person1;
+        User person2;
+        int age1;
+        int age2;
         
-        u1 = selectedUser;
-        age1 = selectedUser.age;
+        person1 = selectedPerson;
+        age1 = selectedPerson.age;
         
-        boolean eligible = false;
+        boolean isValid = false;
 
-        //detect whether the selected two users exist in MiniNet
-        if (isUserExisted(input)){       	
-            u2 = getUserByName(input);
-            age1 = selectedUser.age;
-            age2 = u2.age;
+        //check if the two person are in the network
+        if (isNameInNet(tokens)){       	
+            person2 = getUserByName(tokens);
+            age1 = selectedPerson.age;
+            age2 = person2.age;
         }else{
-            System.out.println("\nFailed to make friends, the user you input is not in Mininet.");
+            System.out.println("\n sorry, the user you input is not in Mininet.");
             return;
         }
 
-        //detect whether the two particular users are actually the same
-        if (selectedUser.name.equals(input)){
-            System.out.println("\nYou cannot add the same user as its friend.");
+        //check if the two person are the same one
+        if (selectedPerson.name.equals(tokens)){
+            System.out.println("\n sorry, you cannot add the selected user as firend.");
             return;
         }        
  
-     /**
-      * Only when the two particular users are all adults,
-      * or when they are all of the dependents type but with
-      * an age difference less than 3-years old 
-      */
+      /*
+       *   there are several situations in which two person can become friends:
+       *   adult-adult
+       *   teen-teen (age difference is within 3, no one's age is below 2)
+       */
 
-      if (u1 instanceof Adult && u2 instanceof Adult) //Detect whether the selected two users are all adults
-          eligible = true;
-      else if(u1 instanceof Dependent &&  
-              u2 instanceof Dependent &&  //If they are not adults, then they should all be dependents
-              Math.abs(age1 - age2) <= 3 &&    // Detect the age difference to see whether it is less than 3
-              age1 > 2 && age2 > 2 &&            //They should both be older than 2
-              ((Dependent) u1).getParents()[0].equals(((Dependent) u2).getParents()[0])) 
-    	  		//They should have different parents, as stated in the assignment specification, all couples are
-    	  		//exclusive to other couples, hence we only check 1 parent of them.
-          	eligible = true;
+      if (person1 instanceof Adult && person2 instanceof Adult)
+          isValid = true;
+      else if(person1 instanceof Dependent &&  
+              person2 instanceof Dependent &&  //both of them should be Teen
+              Math.abs(age1 - age2) <= 3 &&    // the age span should be less then 3
+              age1 >2 && age2 >2 &&            // they should be above 2
+              ((Dependent) person1).getParents()[0].equals(((Dependent) person1).getParents()[0]) )
+    	  // they should be from different family              
+          isValid = true;
 
-      if (eligible) {
-          u1.addFriend(u2);
-          u2.addFriend(u1);
+      if (isValid) {
+          person1.addFriend(person2);
+          person2.addFriend(person1);
       }
     }
     
-  
+   
+    
     public void delFriend() {
     	   	
-//    	boolean hasFriend = !selecteduser.friends.isEmpty();
+//    	boolean hasFriend = !selectedPerson.friends.isEmpty();
 //    	if (hasFriend) { 
 //    	System.out.println("please enter the user's name you want to delete from friend list:");
-//    	String input = sc.next();
+//    	String token = sc.nextLine();
 //    	for (User u : friends) {
-//            if(u.getName().equals(input))
+//            if(u.getName().equals(token))
 //                return true;
 //        }
 //        return false;
@@ -220,94 +228,93 @@ public class Driver {
 //    		System.out.println("the user current has not set any friends");
 //    		return;
 //    	}
-//    	System.out.println("the user"+ input +"has successful delete from friend list!");
+//    	System.out.println("the user"+ token +"has successful delete from friend list!");
 //    	return;
     }
     
    
     
-    public void setSpouse() {
+    public void setCouple() {
     	
-    	if (selectedUser.age <= 16) {
-            System.out.println("\nA dependent is not allowed to have a spouse");
+    	if (selectedPerson.age <= 16) {
+            System.out.println("\n the user is a Teenager!");
             return;
             
         }else {
-            System.out.println("\nPlease enter the user's spuose's name: ");
-            String input = sc.next();       
-	        Adult user1 = (Adult) selectedUser;
-	        User user2;	       	             	        
-	        boolean valid = false;
+            System.out.println("\n please enter the user's spuose's name: ");
+            String tokens = sc.nextLine();       
+	        Adult person1;
+	        User person2;	       	        
+	        person1 = (Adult) selectedPerson;	        	        
+	        boolean isValid = false;
 	
-	        //check if the two user are in MiniNet
-	        if (isUserExisted(input)){       	
-	            user2 = getUserByName(input);
+	        //check if the two person are in the network
+	        if (isNameInNet(tokens)){       	
+	            person2 = getUserByName(tokens);
 	        }else{
-	            System.out.println("\nError, the user you input does not exist in Mininet.");
+	            System.out.println("\n sorry, the user you input is not in Mininet.");
 	            return;
 	        }	
-	        //check if the two user are the same one
-	        if (selectedUser.name.equals(input)){
-	            System.out.println("\nError, you cannot set the selected user as its spouse.");
+	        //check if the two person are the same one
+	        if (selectedPerson.name.equals(tokens)){
+	            System.out.println("\n sorry, you cannot input the user you have selected.");
 	            return;
 	        }        
 
-      if (user2 instanceof Adult && ((user1).getSpouse() == null) && (((Adult) user2).getSpouse() == null))
-          valid = true;
+      if (person2 instanceof Adult && (person1).getCouple() == null && (((Adult) person2).getCouple() == null))
+          isValid = true;
 
-      if (valid) {
-	    	  ((Adult) user1).setSpouse((Adult)user2);
-	    	  ((Adult) user2).setSpouse((Adult)user1);
+      if (isValid) {
+    	  ((Adult) person1).setCouple((Adult)person2);
+    	  ((Adult) person2).setCouple(person1);
       	}
-      else {
-    	  	System.out.println("One or more users already has a spouse");
-        	return;
-      }
-    	  	
       }
     }
     
    
     
     public void setParents() {
-    	if (selectedUser.age > 16) {
-            System.out.println("\nAn adult is not required to set parents!");
+    	if (selectedPerson.age > 16) {
+            System.out.println("\n the user is not required to set parents!");
             return;
             
         }else {
-            User father, mother;
-            int age1, age2, age3;
-            Dependent kids = (Dependent)selectedUser;
+            User father;
+            User mother;
+            int age1;
+            int age2;
+            int age3;
+            Dependent kids = (Dependent) selectedPerson;
             age1 = kids.getAge();
             Adult[] parents = new Adult[2];
             
-            String input = sc.next();  
+            String tokens = sc.nextLine();  
             System.out.println("please enter the father's name:");
-            boolean valid = false;
+            boolean isValid = false;
 
-            //Detect the existence of the two users in MiniNet
-            if (isUserExisted(input)){       	
-            	father = getUserByName(input);
+            //check if the two person are in the network
+            if (isNameInNet(tokens)){       	
+            	father = getUserByName(tokens);
             	age2 = father.age;
-            	input = sc.next(); 
+            	tokens = sc.nextLine(); 
             }else{
-                System.out.println("\nError, the user you input does not exist in Mininet.");
+                System.out.println("\n sorry, the user you input is not in Mininet.");
                 return;
             }
             System.out.println("please enter the mother's name:");
-            if (isUserExisted(input)){       	
-            	mother = getUserByName(input);
+            if (isNameInNet(tokens)){       	
+            	mother = getUserByName(tokens);
             	age3 = mother.age;
-            	input = sc.next(); 
+            	tokens = sc.nextLine(); 
             }else{
-                System.out.println("\n sorry, the user you input does not exist in Mininet.");
+                System.out.println("\n sorry, the user you input is not in Mininet.");
                 return;
             }
             if ( (father instanceof Adult && mother instanceof Adult)&&
             	age2>age1 && age3>age1)
-                valid = true;
+                isValid = true;
 
-            if (valid) {
+            if (isValid) {
             	kids.setParents(parents);
               parents[0].addKids(kids);
               parents[1].addKids(kids);
@@ -315,91 +322,92 @@ public class Driver {
         }
     }
             
+   
+    
+    public void addKids() {
+    	if (selectedPerson instanceof Dependent) {
+    		System.out.println("\n this user is a teenager!");
+    		return;
+    		}else {
+    			
+    		
+    			}
+    		
+    	}        
+   
 
     public void changeStatus() {
     	
-    	System.out.println("\nPlease update your status: ");
-    	String input = sc.next();
-    	selectedUser.setStatus(input);
-    	return;   	
+    	System.out.println("\n please update your status:");
+    	String token = sc.nextLine();
+    	selectedPerson.setStatus(token);
+    	return;
+    	
     }
     
-    public void addKids(Dependent child) {
-    	if (selectedUser instanceof Dependent) {
-    		System.out.println("\nError, a dependent cannot be parent of its peers");
-    		return;
-    		}
-    	else{
-    		((Adult)selectedUser).addKids(child); 
-    		System.out.println("Successfully added this child for the selected user");	
-    			}
-    		
-    	}
     
     
-    public void addDependent(String name, int age, String photoPath, String status, String fatherName, String motherName) {
-	    	boolean isExisted = isUserExisted(name),
-	    			isFatherExisted = isUserExisted(fatherName),
-	    			isMotherExisted = isUserExisted(motherName);
-     			
-        Adult[] parents = new Adult[2];
+    private void addDependent(String name, int age, String photoPath, String status, String fatherName, String motherName) {
+        boolean isFatherIn;
+        boolean isMotherIn;
+        boolean isConflict;
+        Adult[] parents = new Adult[4];
 
-        if (isFatherExisted && isMotherExisted && (!isExisted))
-        {
+        isFatherIn = isNameInNet(fatherName);
+        isMotherIn = isNameInNet(motherName);
+        isConflict = isNameInNet(name);
 
-            //Find out the parents of this dependent
-            User u1 = getUserByName(fatherName);
-            User u2 = getUserByName(motherName);
+        if (isFatherIn && isMotherIn && (!isConflict)){
+
+            //find the parents of this child
+            User p1 = getUserByName(fatherName);
+            User p2 = getUserByName(motherName);
 
 
-            /**
-             * Detect whether the expected "parents" are actually of the Dependent type
-             */
-            if (u1 instanceof Dependent || u2 instanceof Dependent)
-            {
-                System.out.println("Failed to add this dependent as a user, "
-						+ "dependents cannot be their peers' parents.");
+            //though the name are in the network, we still need to verify if the name belongs to a adult
+            //if it belongs to another teen, we cannot let this teen in.
+            if (p1 instanceof Dependent || p2 instanceof Dependent){
+                System.out.println("\na teen can be added if both of his/her parents are adults!");
+                System.out.println("failed to add a new teen!");
                 return;
             }
             
-            parents[0] = (Adult)u1;
-            parents[1] = (Adult)u2;
+            parents[0] = (Adult)p1;
+            parents[1] = (Adult)p2;
             Dependent kid = new Dependent(name, age, photoPath, status, parents);
 
-            theMininet.add(kid);
+            inMininet.add(kid);
 
             //add the child to the parents object
             for (Adult parent: parents)
                 parent.addKids(kid);
 
-            System.out.println("\nThis dependent is added successfully.");
+            System.out.println("\nadd teen successfully!");
 
-        }
-        else
-        {
-            System.out.println("Failed to add this dependent, "
-            		+ "the reason might be either its parents do not exist in MiniNet,"
-            		+ "or it is already existed in MiniNet");
-        }
-    }
-    
-
-    
-    public void addAdult(String name, int age, String photoPath, String status) {
-        
-        if (!isUserExisted(name)){
-            User adult = new Adult(name, age, photoPath, status);
-            theMininet.add(adult);
-            System.out.println("\n"+name+" is successfully added");
         }else{
-            System.out.println("This adult is already existed in Mininet");
+            System.out.println("\na teen can be added if both of his/her parents are in the network");
+            System.out.println("\nthe teens name should be unique");
+            System.out.println("failed to add a new teen!");
+        }
+    }
+    
+
+    
+    private void addAdult(String name, int age, String photoPath, String status) {
+        
+        if (!isNameInNet(name)){
+            User adult = new Adult(name, age, photoPath, status);
+            inMininet.add(adult);
+            System.out.println("\n"+name+" is successful added");
+        }else{
+            System.out.println("failed to add a new person due to name conflict");
         }
     }
 
 
     
-    public boolean isUserExisted(String name){
-        for (User user:theMininet) {
+    private boolean isNameInNet(String name){
+        for (User user:inMininet) {
             if(user.getName().equals(name))
                 return true;
         }
@@ -408,8 +416,8 @@ public class Driver {
     
   
     
-    public User getUserByName(String name){
-        for (User user:theMininet) {
+    private User getUserByName(String name){
+        for (User user:inMininet) {
             if(user.getName().equals(name))
                 return user;
         }

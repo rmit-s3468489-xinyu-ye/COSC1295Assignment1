@@ -6,7 +6,7 @@ import java.util.*;
  */
 public class Adult extends User {
     
-	private Adult spouse;
+	private Adult couple;
     private List<Dependent> kids;
 
     public Adult(String name){
@@ -19,13 +19,15 @@ public class Adult extends User {
         kids = new ArrayList<Dependent>();
     }
     
-    public Adult getSpouse() {
-        return spouse;
+    public Adult getCouple() {
+        return couple;
     }
 
-    public void setSpouse(Adult spouse) {
-        this.spouse = spouse;
+    public void setCouple(Adult couple) {
+        this.couple = couple;
     }
+
+    
 
     public List<Dependent> getKids() {
         return kids;
@@ -39,24 +41,24 @@ public class Adult extends User {
     public String toString(){
         
         boolean nokid = kids.isEmpty();
-        String commonInfo = super.getUserInfo();
+        String prefixInfo = super.getUserInfo();
 
-        StringBuffer retrieval = new StringBuffer(commonInfo);
+        StringBuilder result = new StringBuilder(prefixInfo);
         
-        if (!(spouse == null)) 
-        	retrieval.append("\n\tSpouse: ")
-        		  .append(this.spouse.name); 
+        if (!(couple == null)) 
+        	result.append("\n\tCouple: ")
+        		  .append(this.couple.name); 
         
-            retrieval.append("\nChild(ren):");
+            result.append("\nchild(ren):");
         if (!nokid) {            
             for (Dependent kid : kids)
-                retrieval.append("\n\t").append(kid.getName());
+                result.append("\n\t").append(kid.getName());
         }else {
-        	retrieval.append("The selected user does not have any children");
+        	result.append("the user has not set ady child yet.");
         }
-        retrieval.append("\n");
+        result.append("\n");
 
-        return retrieval.toString();
+        return result.toString();
 
     }
 }

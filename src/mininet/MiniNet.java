@@ -14,16 +14,21 @@ public class MiniNet {
     public static void main(String[] args){
         int userInput = -1;
         
-        menuOperation = new MenuOperation();
-        driver = new Driver(menuOperation);
+        initGlobals();
 
         while(true) {
             MenuOperation.displayMainMenu();
-            userInput = menuOperation.validateMainMenuInput();
+            userInput = menuOperation.validateMenuInput();
             userSelection(userInput);            
         }
     }
 
+    private static void initGlobals() {
+
+        menuOperation = new MenuOperation();
+        driver = new Driver(menuOperation);
+
+    }
 
     private static void userSelection(int input){
     	
@@ -32,14 +37,14 @@ public class MiniNet {
 //            	fileOperation.saveChanges();
                 System.exit(0);
                 break;
-            case Interaction.LIST_MEMBERS:
-                driver.listMembers();
+            case Interaction.LIST_EVERYBODY:
+                driver.listEveryone();
                 break;
-            case Interaction.ADD_USER:
-                driver.addUser();
+            case Interaction.ADD_PERSON:
+                driver.addPerson();
                 break;           
             case Interaction.SELECT_USER:
-                driver.selectUser();                                
+                driver.selectaUser();                                
                 break;
             case Interaction.DELETE_USER:
                 driver.deleteUser();

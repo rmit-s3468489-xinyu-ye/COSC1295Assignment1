@@ -7,10 +7,12 @@ import java.util.*;
  */
 public abstract class User {
 
-	protected String name, photoPath, status;
-    protected int age;
-    protected List<User> friends;
-    
+    String name;
+    int age;
+    String photoPath; 
+    String status;
+    List<User> friends;
+
     protected User(){
         friends = new ArrayList<User>();
     }
@@ -69,28 +71,28 @@ public abstract class User {
     }
 
     public String getUserInfo(){
-        
-    		boolean hasFriend = !friends.isEmpty();
+        boolean hasFriend = !friends.isEmpty();
 
-        StringBuffer retrieval = new StringBuffer();
+        StringBuilder result = new StringBuilder();
        
-        retrieval.append("\nName: ")
+
+        result.append("\nname: ")
         		.append(this.name)
-        		.append("\nAge: ")
+        		.append("\nage: ")
                 .append(this.age)
-                .append("\nProfilePhoto: ")
+                .append("\nphoto: ")
                 .append(this.photoPath)
-                .append("\nStatus: ")
+                .append("\nstatus: ")
                 .append(this.status)
-                .append("\nFriend(s):  ");
+                .append("\nfriend(s):  ");
 
         if (hasFriend) {            
             for (User u : friends)
-                retrieval.append("\t")
+                result.append("\t")
                 	.append(u.getName());
         	}else {
-        		retrieval.append("The selected user does not have any friends yet.");
+        		result.append("the user has not set ady friends yet.");
         	}
-        return retrieval.toString();
+        return result.toString();
     }
 }
