@@ -10,21 +10,21 @@ public class Driver {
 
     private MenuOperation menuOperation;
     private User selectedUser;                
-    private List<User> inMininet;
+    private List<User> theMininet;
     private static Scanner sc;
 
     public Driver(MenuOperation menuOperation){
         this.menuOperation = menuOperation;
-        inMininet = FileOperation.readFromFile();
+        theMininet = FileOperation.readFromFile();
         sc = new Scanner(System.in);
     }
     
-/***List members existing in MiniNet***/
+/***List existing members in MiniNet***/
     
-    public void listEveryone() {
+    public void listMembers() {
         int counter = 1;
         StringBuffer buffer = new StringBuffer("\n\tThe existing members in MiniNet:\n");
-        for (User u : inMininet){
+        for (User u : theMininet){
             buffer.append("\t").append(u.getName());
 //            if (counter++ % 4 == 0) 
 //                buffer.append("\n\t");
@@ -133,7 +133,7 @@ public class Driver {
             System.out.println("\nUser not found, please enter again: ");
         else{
 	        	selectedUser = getUserByName(input);
-	        	inMininet.remove(selectedUser);
+	        	theMininet.remove(selectedUser);
 	        	System.out.println("\nuser "+ selectedUser.name+ " is  successfully removed");
 	        	selectedUser = null;
         }
@@ -337,7 +337,7 @@ public class Driver {
     	}
     
     
-    private void addDependent(String name, int age, String photoPath, String status, String fatherName, String motherName) {
+    public void addDependent(String name, int age, String photoPath, String status, String fatherName, String motherName) {
 	    	boolean isExisted = isUserExisted(name),
 	    			isFatherExisted = isUserExisted(fatherName),
 	    			isMotherExisted = isUserExisted(motherName);
@@ -366,7 +366,7 @@ public class Driver {
             parents[1] = (Adult)u2;
             Dependent kid = new Dependent(name, age, photoPath, status, parents);
 
-            inMininet.add(kid);
+            theMininet.add(kid);
 
             //add the child to the parents object
             for (Adult parent: parents)
@@ -385,11 +385,11 @@ public class Driver {
     
 
     
-    private void addAdult(String name, int age, String photoPath, String status) {
+    public void addAdult(String name, int age, String photoPath, String status) {
         
         if (!isUserExisted(name)){
             User adult = new Adult(name, age, photoPath, status);
-            inMininet.add(adult);
+            theMininet.add(adult);
             System.out.println("\n"+name+" is successfully added");
         }else{
             System.out.println("This adult is already existed in Mininet");
@@ -398,8 +398,8 @@ public class Driver {
 
 
     
-    private boolean isUserExisted(String name){
-        for (User user:inMininet) {
+    public boolean isUserExisted(String name){
+        for (User user:theMininet) {
             if(user.getName().equals(name))
                 return true;
         }
@@ -408,8 +408,8 @@ public class Driver {
     
   
     
-    private User getUserByName(String name){
-        for (User user:inMininet) {
+    public User getUserByName(String name){
+        for (User user:theMininet) {
             if(user.getName().equals(name))
                 return user;
         }

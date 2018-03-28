@@ -7,14 +7,13 @@ import java.util.*;
  */
 public abstract class User {
 
-    String name, photoPath, status;
-    int age;
-    List<User> friends;
+	protected String name, photoPath, status;
+    protected int age;
+    protected List<User> friends;
     
     protected User(){
         friends = new ArrayList<User>();
     }
-
 
     protected User(String name,int age, String photoPath, String status){
         this.name = name;

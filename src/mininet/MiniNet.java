@@ -24,12 +24,6 @@ public class MiniNet {
         }
     }
 
-//    private static void initGlobals() {
-//
-//        menuOperation = new MenuOperation();
-//        driver = new Driver(menuOperation);
-//
-//    }
 
     private static void userSelection(int input){
     	
@@ -39,7 +33,7 @@ public class MiniNet {
                 System.exit(0);
                 break;
             case Interaction.LIST_MEMBERS:
-                driver.listEveryone();
+                driver.listMembers();
                 break;
             case Interaction.ADD_USER:
                 driver.addUser();

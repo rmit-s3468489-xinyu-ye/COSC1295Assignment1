@@ -100,7 +100,7 @@ public class MenuOperation {
         }
       
 
-      private ArrayList<String> vaildateSubMenuInput() {
+      public ArrayList<String> vaildateSubMenuInput() {
           ArrayList<String> vaildInput = new ArrayList<String>();
 
           vaildInput.add("0");
@@ -115,7 +115,6 @@ public class MenuOperation {
           return vaildInput;
       }
 
-
     public static void display(int input, User user){
 
         switch (input){
@@ -125,11 +124,7 @@ public class MenuOperation {
         }
     }
 
-
-
-    
-
-    private static void displaySubMenu(User u) {
+    public static void displaySubMenu(User u) {
         System.out.println("The selected user's profile:");
         if (u.age > 16)
             System.out.println((Adult)u);
@@ -146,8 +141,6 @@ public class MenuOperation {
         System.out.println("0. Back to main menu");
         System.out.print("Please enter your option:");
     }
-
-
     
     public static void displayMainMenu() {
         System.out.println("\n\t\t\t\t MiniNet Main \tMenu");
@@ -157,8 +150,4 @@ public class MenuOperation {
         System.out.println("\t\t\t\t4. Delete a User");
         System.out.println("\t\t\t\t0. Exit");
     }
-    
-    
-
-
 }

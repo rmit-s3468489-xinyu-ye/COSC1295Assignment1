@@ -27,8 +27,6 @@ public class Adult extends User {
         this.spouse = spouse;
     }
 
-    
-
     public List<Dependent> getKids() {
         return kids;
     }
@@ -41,9 +39,9 @@ public class Adult extends User {
     public String toString(){
         
         boolean nokid = kids.isEmpty();
-        String prefixInfo = super.getUserInfo();
+        String commonInfo = super.getUserInfo();
 
-        StringBuffer retrieval = new StringBuffer(prefixInfo);
+        StringBuffer retrieval = new StringBuffer(commonInfo);
         
         if (!(spouse == null)) 
         	retrieval.append("\n\tSpouse: ")

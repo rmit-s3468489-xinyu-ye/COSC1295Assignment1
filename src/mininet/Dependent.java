@@ -7,12 +7,10 @@ import java.util.*;
 public class Dependent extends User{
 
     private Adult[] parents;
-    private int age;
 
     public Dependent(String name, int age, String photoPath, String status, Adult[] parents){
-        this.name = name;
+       super(name, age, photoPath, status);
         this.parents = parents;
-        this.age = age;
     }
 
     public Adult[] getParents() {
@@ -27,8 +25,7 @@ public class Dependent extends User{
     public String toString(){
 
         return super.getUserInfo() +
-                "\nage: "+age +
-                "\nparents: " + parents[0] + ", " + parents[1] + "\n" ;
+                "\nParents: " + parents[0] + ", " + parents[1] + "\n" ;
     }
 
 }
