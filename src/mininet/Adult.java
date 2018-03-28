@@ -6,7 +6,7 @@ import java.util.*;
  */
 public class Adult extends User {
     
-	private Adult couple;
+	private Adult spouse;
     private List<Dependent> kids;
 
     public Adult(String name){
@@ -19,12 +19,12 @@ public class Adult extends User {
         kids = new ArrayList<Dependent>();
     }
     
-    public Adult getCouple() {
-        return couple;
+    public Adult getSpouse() {
+        return spouse;
     }
 
-    public void setCouple(Adult couple) {
-        this.couple = couple;
+    public void setSpouse(Adult spouse) {
+        this.spouse = spouse;
     }
 
     
@@ -43,22 +43,22 @@ public class Adult extends User {
         boolean nokid = kids.isEmpty();
         String prefixInfo = super.getUserInfo();
 
-        StringBuilder result = new StringBuilder(prefixInfo);
+        StringBuffer retrieval = new StringBuffer(prefixInfo);
         
-        if (!(couple == null)) 
-        	result.append("\n\tCouple: ")
-        		  .append(this.couple.name); 
+        if (!(spouse == null)) 
+        	retrieval.append("\n\tSpouse: ")
+        		  .append(this.spouse.name); 
         
-            result.append("\nchild(ren):");
+            retrieval.append("\nChild(ren):");
         if (!nokid) {            
             for (Dependent kid : kids)
-                result.append("\n\t").append(kid.getName());
+                retrieval.append("\n\t").append(kid.getName());
         }else {
-        	result.append("the user has not set ady child yet.");
+        	retrieval.append("The selected user does not have any children");
         }
-        result.append("\n");
+        retrieval.append("\n");
 
-        return result.toString();
+        return retrieval.toString();
 
     }
 }
