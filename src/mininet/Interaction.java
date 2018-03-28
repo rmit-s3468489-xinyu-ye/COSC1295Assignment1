@@ -3,6 +3,7 @@ package mininet;
  *
  * @author Xinyu YE s3468489
  */
+
 public interface Interaction {
     public static final int EXIT = 0;
     public static final int LIST_EVERYBODY = 1;

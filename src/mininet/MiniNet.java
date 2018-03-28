@@ -14,7 +14,6 @@ public class MiniNet {
     public static void main(String[] args){
         int userInput = -1;
         
-
         initGlobals();
 
         while(true) {

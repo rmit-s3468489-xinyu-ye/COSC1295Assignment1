@@ -24,7 +24,7 @@ public class FileOperation {
         try {
             LineNumberReader nread = new LineNumberReader(new FileReader("src/userInfo.csv"));
             while((line = nread.readLine()) != null){
-                tokens = line.split(",");
+                tokens = line.split(",,");
                 name = tokens[0];
                 age = Integer.parseInt(tokens[1]);
                 photoPath = tokens[2];

@@ -99,7 +99,7 @@ public class Driver {
     
     
     public void addPerson() {
-    	String name;            //the name of the added person
+    	String name;
     	int age;
         String photoPath;
         String status;
@@ -108,16 +108,13 @@ public class Driver {
  
         
         String[] tokens;
-        //get the user input
         tokens = menuOperation.readAndCall(Interaction.ADD_PERSON);
-        //store the values into suitable variables
         name = tokens[0];
         
         age = Integer.parseInt(tokens[1]);
         photoPath = tokens[2];
         status = tokens[3];
-        //verify whether the person is logically valid to be added to the network
-        //check it when the added person is an adult
+       
         if (age>16) {
             addAdult(name, age, photoPath, status);
         }else{
@@ -151,10 +148,10 @@ public class Driver {
 
     
     public void setPhoto() {
-    	
-    	String token = sc.nextLine();
+    	   	
     	System.out.println("\n please input your photo path (for example: src/yourname.jpg)"
     			+ "\nor enter 0 back to SubMenu:");
+    	String token = sc.nextLine();
     	selectedPerson.setPhotoPath(token);
     	return;
     	
