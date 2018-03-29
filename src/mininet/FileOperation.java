@@ -1,6 +1,6 @@
 /**
  *
- * @author Yifan ZHANG s3615625
+ * @author Xinyu YE s3468489
  */
 
 package mininet;
@@ -15,9 +15,10 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileOperation {
+public class FileOperation 
+{
 
-	static List<User> members = new ArrayList<User>();
+	static List<User> existedUsers = new ArrayList<User>();
 	static String line;
 	String name;
 	String photoPath;
@@ -30,13 +31,12 @@ public class FileOperation {
 		
 		try 
 		{
-			File f = new File("members.txt");
+			File f = new File("existedUsers.txt");
 			if (!f.exists() || f.isDirectory())
-			{
 				f.createNewFile(); 
-			}       
+			
 			BufferedReader inputStream = 
-					new BufferedReader(new FileReader("members.txt"));
+					new BufferedReader(new FileReader("existedUsers.txt"));
 
 			line = "";
 
@@ -51,15 +51,14 @@ public class FileOperation {
 				
 
 				if(Integer.parseInt(args[1]) > 16)
-					members.add(new Adult(args[0], Integer.parseInt(args[1]), args[2], args[3]));
+					existedUsers.add(new Adult(args[0], Integer.parseInt(args[1]), args[2], args[3]));
 				else
 				{
 					Adult[] parents = new Adult[2];
-					parents[0] = (Adult)getUserByName(args[4],members);
-					parents[1] = (Adult)getUserByName(args[5],members);
-					members.add(new Dependent(args[0], Integer.parseInt(args[1]), args[2], args[3], parents));
+					parents[0] = (Adult)getUserByName(args[4],existedUsers);
+					parents[1] = (Adult)getUserByName(args[5],existedUsers);
+					existedUsers.add(new Dependent(args[0], Integer.parseInt(args[1]), args[2], args[3], parents));
 				}
-
 			}
 			//release the resource
 			inputStream.close();
@@ -67,37 +66,33 @@ public class FileOperation {
 		catch (FileNotFoundException ffe) 
 		{
 			ffe.printStackTrace();
-			System.out.println("File members.txt was not found");
+			System.out.println("File existedUsers.txt was not found");
 			System.out.println("or could not be opened");
 		}
 		catch (IOException ioe)
 		{
 			ioe.printStackTrace();
-			System.out.println("Fail to read from members.txt");
+			System.out.println("Fail to read from existedUsers.txt");
 		}
-		return members;
+		return existedUsers;
 	}
 
 	public static void writeToFile()
 	{
 
-
 		PrintWriter outputStream = null;
 		try
 		{
-			String filePath = "members.txt";
-			File f = new File(filePath);
-			if(!f.exists() || f.isDirectory()) { 
+			File f = new File("existedUsers.txt");
+			if(!f.exists() || f.isDirectory())  
 				f.createNewFile();
-			}
-
-
+			
 			outputStream = 
-					new PrintWriter(new FileOutputStream(filePath));
+					new PrintWriter(new FileOutputStream("existedUsers.txt"));
 		}
 		catch(FileNotFoundException e)
 		{
-			System.out.println("Error writing to the file members.txt.");
+			System.out.println("Error writing to the file existedUsers.txt.");
 			System.exit(0);
 		}
 		catch(IOException e)
@@ -106,31 +101,27 @@ public class FileOperation {
 			System.exit(0);
 		}
 
-		for(int i=0; i<members.size(); i++)
+		for(int i=0; i<existedUsers.size(); i++)
 		{
-			String userstr="";
-			User u = members.get(i);
-			userstr=u.getName() + "," + u.getAge() + "," + u.getPhotoPath() + "," + u.getStatus();
-			
+			String userInfo="";
+			User u = existedUsers.get(i);
+			userInfo = u.getName() + "," + u.getAge() + "," + u.getPhotoPath() + "," + u.getStatus();
 			
 			if(u instanceof Dependent)
 			{
-			
-				userstr+=","+ ((Dependent)u).getParents()[0].getName()+",";
-				userstr+=","+ ((Dependent)u).getParents()[1].getName();
+				userInfo+=","+ ((Dependent)u).getParents()[0].getName()+",";
+				userInfo+=","+ ((Dependent)u).getParents()[1].getName();
 			}
-			outputStream.println(userstr);
-				
-
+			outputStream.println(userInfo);
 		}
-
 		outputStream.close( );
-
 	}
 	
-	private static User getUserByName(String name,List members){
-        for (Object o: members) {
-        		User user=(User)o;
+	private static User getUserByName(String name,List existedUsers)
+	{
+        for (Object o: existedUsers) 
+        {
+        		User user = (User)o;
             if(user.getName().equals(name))
                 return user;
         }

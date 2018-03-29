@@ -4,27 +4,34 @@ import java.util.*;
  *
  * @author Xinyu YE s3468489
  */
-public class Dependent extends User{
+public class Dependent extends User
+{
     
     private Adult[] parents;
     
-    public Dependent(String name, int age, String photoPath, String status, Adult[] parents){
+    public Dependent(String name, int age, String photoPath, String status, Adult[] parents)
+    {
         super(name, age, photoPath, status);
         this.parents = parents;
     }
    
-    public Adult[] getParents() {
+    public Adult[] getParents() 
+    {
         return parents;
     }
     
-    public void setParents(Adult[] parents) {
+    public void setParents(Adult[] parents) 
+    {
         this.parents = parents;
     }
     
+    //Append the name of the parents of a 
+    //particular dependent to its profile
     @Override
-    public String toString(){
+    public String toString()
+    {
         
         return super.getUserInfo() +
-                "\nParents: " + parents[0] + ", " + parents[1];
+                "\nParents: " + parents[0].getName() + ", " + parents[1].getName();
     }
 }

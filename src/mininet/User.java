@@ -5,17 +5,24 @@ import java.util.*;
  *
  * @author Xinyu YE s3468489
  */
-public abstract class User {
+public abstract class User 
+{
+    /*
+     * The following fields' access control modifiers
+     * have been set to be protected, for User's subclasses
+     * to inherit
+     */
+    protected String name, photoPath, status;
+    protected int age;
+    protected List<User> friends;
     
-    String name, photoPath, status;
-    int age;
-    List<User> friends;
+//    protected User()
+//    {
+//        friends = new ArrayList<User>();
+//    }
     
-    protected User(){
-        friends = new ArrayList<User>();
-    }
-    
-    protected User(String name,int age, String photoPath, String status){
+    protected User(String name,int age, String photoPath, String status)
+    {
         this.name = name;
         this.age = age;
         this.photoPath = photoPath;
@@ -27,7 +34,8 @@ public abstract class User {
         return name;
     }
     
-    public void setName(String name) {
+    public void setName(String name) 
+    {
         this.name = name;
     }
     
@@ -41,34 +49,42 @@ public abstract class User {
         this.age = age;
     }
     
-    public String getPhotoPath() {
+    public String getPhotoPath() 
+    {
         return photoPath;
     }
     
-    public void setPhotoPath(String photoPath) {
+    public void setPhotoPath(String photoPath) 
+    {
         this.photoPath = photoPath;
     }
     
-    public String getStatus() {
+    public String getStatus() 
+    {
         return status;
     }
     
-    public void setStatus(String status) {
+    public void setStatus(String status) 
+    {
         this.status = status;
     }
     
-    public List<User> getFriends() {
+    public List<User> getFriends() 
+    {
         return friends;
     }
     
-    public void addFriend(User u) {
+    public void addFriend(User u) 
+    {
         this.friends.add(u);
     }
-    public void delFriend(User u) {
+    public void delFriend(User u) 
+    {
         this.friends.remove(u);
     }
     
-    public String getUserInfo(){
+    public String getUserInfo()
+    {
         boolean hasFriend = !friends.isEmpty();
         
         StringBuilder result = new StringBuilder();
@@ -83,13 +99,15 @@ public abstract class User {
                 .append(this.status)
                 .append("\nFriend(s): ");
         
-        if (hasFriend) {
+        if (hasFriend) 
+        {
             for (User u : friends)
                 result.append("\t")
                         .append(u.getName());
-        }else {
-            result.append("This user does not have any friends");
         }
+        else
+        		result.append("This user does not have any friends");
+        
         return result.toString();
     }
 }

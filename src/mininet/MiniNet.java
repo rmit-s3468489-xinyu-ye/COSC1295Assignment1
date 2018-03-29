@@ -5,26 +5,29 @@ package mininet;
  *
  * @author Yifan ZHANG s3615625
  */
-public class MiniNet {
+public class MiniNet 
+{
     
     private static MenuOperation menuOperation;
     private static Driver driver;
        
-    public static void main(String[] args){
+    public static void main(String[] args)
+    {
         int userInput = -1;
         
         menuOperation = new MenuOperation();
         driver = new Driver(menuOperation);
         
-        while(true) {
+        while(true) 
+        {
             MenuOperation.displayMainMenu();
-            userInput = menuOperation.validateMenuInput();
+            userInput = menuOperation.validateMainMenuInput();
             userSelection(userInput);
         }
     }
     
-    private static void userSelection(int input){
-        
+    private static void userSelection(int input)
+    {
         switch (input){
             case Interaction.EXIT:
             		FileOperation.writeToFile();
@@ -44,5 +47,4 @@ public class MiniNet {
                 break;               
         }
     }
-    
 }
