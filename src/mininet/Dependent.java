@@ -7,7 +7,6 @@ import java.util.*;
 public class Dependent extends User{
     
     private Adult[] parents;
-    private int age;
     
     public Dependent(String name, int age, String photoPath, String status, Adult[] parents){
         super(name, age, photoPath, status);

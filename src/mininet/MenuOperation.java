@@ -101,7 +101,11 @@ public class MenuOperation {
         vaildInput.add("1");
         vaildInput.add("2");
         vaildInput.add("3");
-        
+        vaildInput.add("4");
+        vaildInput.add("5");
+        vaildInput.add("6");
+        vaildInput.add("7");
+        vaildInput.add("0");
         return vaildInput;
     }
  
@@ -115,7 +119,7 @@ public class MenuOperation {
         }
     }
     
-    private static void displaySubMenu(User u) {
+    public static void displaySubMenu(User u) {
         System.out.println("The selected user's profile:");
         if (u.age > 16)
             System.out.println((Adult)u);

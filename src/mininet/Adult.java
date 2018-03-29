@@ -7,16 +7,16 @@ import java.util.*;
 public class Adult extends User {
     
     private Adult spouse;
-    private List<Dependent> kids;
+    private List<Dependent> children;
     
     public Adult(String name){
         this.name = name;
-        kids = new ArrayList<Dependent>();
+        children = new ArrayList<Dependent>();
     }
     
     public Adult(String name,int age, String photoPath, String status){
         super(name,age, photoPath, status);
-        kids = new ArrayList<Dependent>();
+        children = new ArrayList<Dependent>();
     }
     
     public Adult getSpouse() {
@@ -29,29 +29,29 @@ public class Adult extends User {
     
     
     
-    public List<Dependent> getKids() {
-        return kids;
+    public List<Dependent> getChildren() {
+        return children;
     }
     
-    public void addKids(Dependent child) {
-        kids.add(child);
+    public void addChildren(Dependent child) {
+        children.add(child);
     }
     
     @Override
     public String toString(){
         
-        boolean nokid = kids.isEmpty();
+        boolean nokid = children.isEmpty();
         String commonInfo = super.getUserInfo();
         
         StringBuilder result = new StringBuilder(commonInfo);
         
         if (!(spouse == null))
-            result.append("\n\tSpouse: ")
+            result.append("\nSpouse: ")
                     .append(this.spouse.name);
         
         result.append("\nChild(ren):");
         if (!nokid) {
-            for (Dependent kid : kids)
+            for (Dependent kid : children)
                 result.append("\n\t").append(kid.getName());
         }else {
             result.append("the user does not have any children.");

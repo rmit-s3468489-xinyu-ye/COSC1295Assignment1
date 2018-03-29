@@ -27,7 +27,7 @@ public class MiniNet {
         
         switch (input){
             case Interaction.EXIT:
-//            	fileOperation.saveChanges();
+            		FileOperation.writeToFile();
                 System.exit(0);
                 break;
             case Interaction.LIST_MEMBERS:

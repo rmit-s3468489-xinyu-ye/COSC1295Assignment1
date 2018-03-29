@@ -81,7 +81,7 @@ public abstract class User {
                 .append(this.photoPath)
                 .append("\nStatus: ")
                 .append(this.status)
-                .append("\nFriend(s):  ");
+                .append("\nFriend(s): ");
         
         if (hasFriend) {
             for (User u : friends)
