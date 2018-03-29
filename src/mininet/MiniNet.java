@@ -1,10 +1,9 @@
-package mininet;
-
-
 /**
  *
  * @author Yifan ZHANG s3615625
  */
+package mininet;
+
 public class MiniNet 
 {
     
@@ -33,7 +32,7 @@ public class MiniNet
             		FileOperation.writeToFile();
                 System.exit(0);
                 break;
-            case Interaction.LIST_MEMBERS:
+            case Interaction.LIST_EXISTED_USERS:
                 driver.listEveryone();
                 break;
             case Interaction.ADD_USER:

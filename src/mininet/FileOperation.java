@@ -2,7 +2,6 @@
  *
  * @author Xinyu YE s3468489
  */
-
 package mininet;
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,7 +27,6 @@ public class FileOperation
 	
 	public static List<User> readFromFile()
 	{
-		
 		try 
 		{
 			File f = new File("existedUsers.txt");
@@ -117,6 +115,13 @@ public class FileOperation
 		outputStream.close( );
 	}
 	
+	/**
+	 * 
+	 * @param name
+	 * @param existedUsers
+	 * @return a particular user existed in the ArrayList existedUsers
+	 * 
+	 */
 	private static User getUserByName(String name,List existedUsers)
 	{
         for (Object o: existedUsers) 

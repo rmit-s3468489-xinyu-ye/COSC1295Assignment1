@@ -1,12 +1,12 @@
-package mininet;
-import java.util.*;
 /**
  *
  * @author Xinyu YE s3468489
  */
+package mininet;
+import java.util.*;
+
 public class Adult extends User 
 {
-    
     private Adult spouse;
     private List<Dependent> children;
     

@@ -1,6 +1,5 @@
 package mininet;
 import java.util.*;
-
 /**
  *
  * @author Xinyu YE s3468489
@@ -16,10 +15,10 @@ public abstract class User
     protected int age;
     protected List<User> friends;
     
-//    protected User()
-//    {
-//        friends = new ArrayList<User>();
-//    }
+    protected User()
+    {
+        friends = new ArrayList<User>();
+    }
     
     protected User(String name,int age, String photoPath, String status)
     {
