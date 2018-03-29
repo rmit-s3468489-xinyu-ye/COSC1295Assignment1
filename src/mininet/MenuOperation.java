@@ -152,7 +152,7 @@ public class MenuOperation
         System.out.println("\n\t\tSub Menu for the selected user");
         System.out.println("1. Update profile");
         System.out.println("2. Add a friend");
-        System.out.println("3. Delete a friend(This feature has not been done");
+        System.out.println("3. Delete a friend");
         System.out.println("4. Set spouse");
         System.out.println("5. Set parents");
         System.out.println("6. Add a child");

@@ -232,11 +232,29 @@ public class Driver
 					+ "failed to make friends between them");
 	}
 
+	public void delFriend() 
+	{
+		System.out.println("Please enter the friend's name you want "
+				+ "to delete for the selected user :");
+		String input = sc.nextLine();
 
-
-	public void delFriend() {
-
-		//
+		User u;
+		
+		boolean existed = false;
+		
+		if(isUserExisted(input))
+			existed = true;
+		
+		if(existed) 
+		{
+			selectedUser.delFriend(getUserByName(input));
+			System.out.println("The The user you searched is successfully "
+					+ "deleted from the selected user's friends list");
+		}
+			
+		else
+			System.out.println("The user you searched is not "
+					+ "in the selected user's friends list");
 	}
 
 
