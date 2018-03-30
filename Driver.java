@@ -55,7 +55,7 @@ public class Driver
 			MenuOperation.display(Interaction.SELECT_USER, selectedUser);
 
 			input = sc.nextLine();
-			while(!input.matches("[0-7]")) 
+			while(!input.matches("[0-9]")) 
 			{
 				System.out.print("\nInvaild input, please try again: ");
 				input = sc.nextLine();
@@ -88,12 +88,18 @@ public class Driver
 				case Interaction.CHANGE_STATUS:
 					changeStatus();
 					break;
+				case Interaction.FINDOUTCHILDREN:
+					searchChildren();
+					break;
+				case Interaction.FINDOUTPARENTS:
+					searchParents();
+					break;
 				}
 
 				//MenuOperation.display(Interaction.SELECT_USER, selectedUser);
 				MenuOperation.displaySubMenu(selectedUser);
 				option = Integer.parseInt(sc.nextLine());
-				while(!input.matches("[0-7]")) 
+				while(!input.matches("[0-9]")) 
 				{
 					System.out.print("\nInvaild input, please try again: ");
 					input = sc.nextLine();
@@ -213,7 +219,7 @@ public class Driver
 				user2 instanceof Dependent &&  
 				Math.abs(age1 - age2) <= 3 &&    
 				(age1 > 2 && age2 > 2) &&            
-				((Dependent) user1).getParents()[0].equals(((Dependent) user2).getParents()[0]) )
+				!((Dependent) user1).getParents()[0].equals(((Dependent) user2).getParents()[0]) && !((Dependent) user1).getParents()[0].equals(((Dependent) user2).getParents()[0]))
 			
 			eligible = true;
 
@@ -230,27 +236,56 @@ public class Driver
 
 	public void deleteFriend() 
 	{
-		System.out.println("Please enter the friend's name you want "
-				+ "to delete for the selected user :");
-		String input = sc.nextLine();
-
-		User u;
-		
-		boolean existed = false;
-		
-		if(isUserExisted(input))
-			existed = true;
-		
-		if(existed) 
+		if (selectedUser == null)
+        {
+            System.out.println("You have to select a user first "
+                    + "to find out whether he/she has any children");
+            return;
+        }
+		else 
 		{
-			selectedUser.delFriend(getUserByName(input));
-			System.out.println("The The user you searched is successfully "
-					+ "deleted from the selected user's friends list");
-		}
+			List<User> friends = selectedUser.getFriends();
 			
-		else
-			System.out.println("The user you searched is not "
-					+ "in the selected user's friends list");
+			if(!friends.isEmpty()) 
+			{
+				System.out.println("The selected user's friends: ");
+				
+				for (int i = 0; i < friends.size(); i++)
+		        {
+		            User f = friends.get(i);
+		            System.out.println(f.getName());
+		        }
+				
+				System.out.println("Please enter the friend's name you want "
+						+ "to delete for the selected user :");
+				
+				String input = sc.nextLine();
+				
+				boolean existed = false;
+				
+				if(isUserExisted(input))
+					existed = true;
+				
+				if(existed) 
+				{
+					if(friends.contains(getUserByName(input))) 
+					{
+						selectedUser.delFriend(getUserByName(input));
+						System.out.println("The The user you searched is successfully "
+								+ "deleted from the selected user's friends list");
+					}
+					else
+						System.out.println("The user you searched is not "
+								+ "in the selected user's friends list");
+				}
+				else
+					System.out.println("The user you searched is not a friend of " 
+							+ selectedUser.getName());
+			}
+			else
+				System.out.println(selectedUser.getName() + "does not have any friends");
+		}
+		
 	}
 
 	public void isFriend()
@@ -280,6 +315,68 @@ public class Driver
 		}
 	}
 
+	//Find out a particular user's children
+    public void searchChildren()
+    {
+        boolean hasChildren = false;
+        List<Dependent> children = null;
+        
+        if (selectedUser == null)
+        {
+            System.out.println("You have to select a user first "
+                    + "to find out whether he/she has any children");
+            return;
+        }
+        
+        if (selectedUser instanceof Adult)
+        {
+            children = ((Adult)selectedUser).getChildren();
+            if(!children.isEmpty())
+            {
+                hasChildren = true;
+                System.out.println("The children list of the selected user: ");
+                for (int i = 0; i < children.size(); i++)
+                {
+                    Dependent d = children.get(i);
+                    System.out.println(d.getName());
+                }
+            }
+            else
+                System.out.println("This user does not have any children");
+        }
+        
+        if (selectedUser instanceof Dependent)
+            System.out.println("A dependent does not have any children");
+    }
+    
+    //Find out a particular user's parents
+    public void searchParents()
+    {
+        Adult[] parents = null;
+        
+        if (selectedUser == null)
+        {
+            System.out.println("You have to select a user first "
+                    + "to search for his/her parents");
+            return;
+        }
+        
+        if (selectedUser instanceof Adult)
+        {
+            System.out.println("The parents' info is not mandatory for Adults"
+                    + ", no records to be retrieved");
+            return;
+        }
+        else
+        {
+            parents = ((Dependent)selectedUser).getParents();
+            System.out.println("The following two users are "
+                    + "the selected user's parents: ");
+            System.out.println("Father: " + ((Dependent)selectedUser).getParents()[0].getName() + ","
+                    + "Mother: " +((Dependent)selectedUser).getParents()[1].getName());
+        }
+    }
+    
 	public void setSpouse() 
 	{
 
@@ -339,7 +436,7 @@ public class Driver
 
 	public void setParents() 
 	{
-		if (selectedUser.age > 16) 
+		if (selectedUser.getAge() > 16) 
 		{
 			System.out.println("\nAn adult is not required to set parents!");
 			return;
@@ -348,49 +445,67 @@ public class Driver
 		else 
 		{
 			User father, mother;
-			int age1, age2, age3;
-
-			Dependent child = (Dependent) selectedUser;
-			age1 = child.getAge();
-			Adult[] parents = new Adult[2];
-
-			String input = sc.nextLine();
-			System.out.println("Please enter the father's name for the selected user:");
-			boolean valid = false;
-
-			//Detect whether the expected "parents" for the selected user are in MiniNet
-			if (isUserExisted(input))
+			while (true) 
 			{
-				father = getUserByName(input);
-				age2 = father.getAge();
-				input = sc.nextLine();
+				System.out.println("Please enter the father's name for the selected user:");
+				String input = sc.nextLine();
+
+
+				//Detect whether the expected "parents" for the selected user are in MiniNet
+				if (isUserExisted(input))
+				{
+					father = getUserByName(input);
+					if(father.getAge() < 16) 
+					{
+						System.out.println("Error, a dependent cannot be parent of its peers");
+						continue;
+					}
+					else 
+					{
+						((Dependent)selectedUser).setFather((Adult)father);
+						System.out.println("Successfully set " + father.getName() +
+								" as " + selectedUser.getName() + "'s father ");
+						break;
+					}
+						
+				}								
+				else
+				{
+					System.out.println("\nError, the user you searched "
+							+ "does not exist in Mininet.");
+					continue;
+				}
 			}
-			else
+			
+			while (true) 
 			{
-				System.out.println("\nError, the user you searched "
-						+ "does not exist in Mininet.");
-				return;
-			}
-			System.out.println("please enter the mother's name for the selected user:");
-			if (isUserExisted(input)){
-				mother = getUserByName(input);
-				age3 = mother.getAge();
-				input = sc.nextLine();
-			}else
-			{
-				System.out.println("\nError, the user you searched "
-						+ "does not exist in Mininet.");
-				return;
-			}
-			if ( (father instanceof Adult && mother instanceof Adult)&&
-					age2 > age1 && age3 > age1)
-				valid = true;
+				System.out.println("Please enter the mother's name for the selected user:");
+				String input = sc.nextLine();
 
-			if (valid) 
-			{
-				child.setParents(parents);
-				parents[0].addChildren(child);
-				parents[1].addChildren(child);
+				//Detect whether the expected "parents" for the selected user are in MiniNet
+				if (isUserExisted(input))
+				{
+					mother = getUserByName(input);
+					if(mother.getAge() < 16) 
+					{
+						System.out.println("Error, a dependent cannot be parent of its peers");
+						continue;
+					}
+					else 
+					{
+						((Dependent)selectedUser).setMother((Adult)mother);
+						System.out.println("Successfully set " + mother.getName() +
+								" as " + selectedUser.getName() + "'s mother ");
+						break;
+					}
+						
+				}								
+				else
+				{
+					System.out.println("\nError, the user you searched "
+							+ "does not exist in Mininet.");
+					continue;
+				}
 			}
 		}
 	}
@@ -425,6 +540,15 @@ public class Driver
 							break;
 						}
 				}
+				List<Dependent> kids = ((Adult)selectedUser).getChildren();
+				for (int i = 0; i < kids.size(); i++)
+				{
+					Dependent k = kids.get(i);
+					if(childName.equals(k.getName()))
+						System.out.println("This dependent is already a child of "
+					+ selectedUser.getName());
+					return;
+				}
 				if(flag)
 				{
 					((Adult)selectedUser).addChildren((Dependent)getUserByName(childName));
@@ -451,7 +575,7 @@ public class Driver
 		boolean isFatherExisted;
 		boolean isMotherExisted;
 		boolean isExisted;
-		Adult[] parents = new Adult[4];
+		Adult[] parents = new Adult[2];
 
 		isFatherExisted = isUserExisted(fatherName);
 		isMotherExisted = isUserExisted(motherName);
@@ -474,18 +598,20 @@ public class Driver
 						+ "dependents cannot be their peers' parents.");
 				return;
 			}
+			
+			
 			parents[0] = (Adult)u1;
 			parents[1] = (Adult)u2;
 			Dependent kid = new Dependent(name, age, photoPath, status, parents);
 
 			theMininet.add(kid);
-
+			
 			//add the dependent to the two parent objects
 			for (Adult parent: parents)
 				parent.addChildren(kid);
-
 			System.out.println("\nThis dependent is added successfully.");
 		}
+
 		else
 		{
 			System.out.println("Failed to add this dependent, "

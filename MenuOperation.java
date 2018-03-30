@@ -106,8 +106,8 @@ public class MenuOperation
         creates.add("Please enter the user's age: ");
         creates.add("Please update your photo e.g.'src/photo/yourname.jpg',press enter to skip this step: ");
         creates.add("Please update your status, press enter to skip this step: ");
-        creates.add("Please enter the mother's name of the user(press enter to pass if the user is an adult): ");
         creates.add("Please enter the father's name of the user(press enter to pass if the user is an adult): ");
+        creates.add("Please enter the mother's name of the user(press enter to pass if the user is an adult): ");
         return creates;
     }
     
@@ -123,6 +123,8 @@ public class MenuOperation
         vaildInput.add("5");
         vaildInput.add("6");
         vaildInput.add("7");
+        vaildInput.add("8");
+        vaildInput.add("9");
 
         return vaildInput;
     }
@@ -157,6 +159,8 @@ public class MenuOperation
         System.out.println("5. Set parents");
         System.out.println("6. Add a child");
         System.out.println("7. Change status");
+        System.out.println("8. Find out selected user's children: ");
+        System.out.println("9.Find out selected user's parents: ");
         System.out.println("0. Back to main menu");
         System.out.print("Please enter the number of option: ");
     }
