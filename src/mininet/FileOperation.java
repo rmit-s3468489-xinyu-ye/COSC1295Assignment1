@@ -16,13 +16,10 @@ import java.util.List;
 
 public class FileOperation 
 {
-
-	static List<User> existedUsers = new ArrayList<User>();
+	String name, photoPath, status;
 	static String line;
-	String name;
-	String photoPath;
-	String status;
 	static String[] args;
+	static List<User> existedUsers = new ArrayList<User>();
 	int age;
 	
 	public static List<User> readFromFile()
@@ -47,7 +44,6 @@ public class FileOperation
 				}  
 				args = line.split(",");
 				
-
 				if(Integer.parseInt(args[1]) > 16)
 					existedUsers.add(new Adult(args[0], Integer.parseInt(args[1]), args[2], args[3]));
 				else
@@ -99,13 +95,13 @@ public class FileOperation
 			System.exit(0);
 		}
 
-		for(int i=0; i<existedUsers.size(); i++)
+		for(int i=0; i <existedUsers.size(); i++)
 		{
 			String userInfo="";
 			User u = existedUsers.get(i);
 			userInfo = u.getName() + "," + u.getAge() + "," + u.getPhotoPath() + "," + u.getStatus();
 			
-			if(u instanceof Dependent)
+			if(u instanceof Dependent && ((Dependent) u).getParents() != null)
 			{
 				userInfo+=","+ ((Dependent)u).getParents()[0].getName()+",";
 				userInfo+=","+ ((Dependent)u).getParents()[1].getName();

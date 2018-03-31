@@ -27,13 +27,14 @@ public class MiniNet
     
     private static void userSelection(int input)
     {
-        switch (input){
+        switch (input)
+        {
             case Interaction.EXIT:
             		FileOperation.writeToFile();
                 System.exit(0);
                 break;
             case Interaction.LIST_EXISTED_USERS:
-                driver.listEveryone();
+                driver.listExitedUsers();
                 break;
             case Interaction.ADD_USER:
                 driver.addUser();
@@ -43,7 +44,10 @@ public class MiniNet
                 break;
             case Interaction.DELETE_USER:
                 driver.deleteUser();
-                break;               
+                break; 
+            case Interaction.INQUIRE_FRIENDSHIP:
+            		driver.isFriend();
+            		break;
         }
     }
 }

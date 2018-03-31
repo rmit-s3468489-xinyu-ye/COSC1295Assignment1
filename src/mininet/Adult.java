@@ -63,7 +63,7 @@ public class Adult extends User
                 result.append("\n\t").append(kid.getName());
         }
         else 
-        		result.append("the user does not have any children.");
+        		result.append("\n\t\t\tThis user does not have any children.");
         
         return result.toString();        
     }

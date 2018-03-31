@@ -88,15 +88,15 @@ public abstract class User
         
         StringBuilder result = new StringBuilder();
      
-        result.append("\nName: ")
+        result.append("\n\t\t\tName: ")
                 .append(this.name)
-                .append("\nAge: ")
+                .append("\n\t\t\tAge: ")
                 .append(this.age)
-                .append("\nPhoto: ")
+                .append("\n\t\t\tPhoto: ")
                 .append(this.photoPath)
-                .append("\nStatus: ")
+                .append("\n\t\t\tStatus: ")
                 .append(this.status)
-                .append("\nFriend(s): ");
+                .append("\n\t\t\tFriend(s): ");
         
         if (hasFriend) 
         {
