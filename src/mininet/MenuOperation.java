@@ -44,7 +44,7 @@ public class MenuOperation
 	    	return selection;
     }
 
-    public String[] readAndCall(int flag) 
+    public String[] readAndInvoke(int flag) 
     {
         String[] input = null;
         switch (flag)
@@ -106,10 +106,11 @@ public class MenuOperation
         ArrayList<String> creates = new ArrayList<String>();
         creates.add("\n\t\t\tPlease enter the user's name: ");
         creates.add("\n\t\t\tPlease enter the user's age: ");
-        creates.add("\n\t\t\tPlease update your photo e.g.'src/photo/yourname.jpg': ");
-        creates.add("\n\t\t\tPlease update your status: ");
+        creates.add("\n\t\t\tPlease set your photo e.g.,'src/photo/yourname.jpg': ");
+        creates.add("\n\t\t\tPlease set your status: ");
         creates.add("\n\t\t\tPlease enter the father's name of the user(press enter to pass if the user is an adult): ");
         creates.add("\n\t\t\tPlease enter the mother's name of the user(press enter to pass if the user is an adult): ");
+        
         return creates;
     }
     

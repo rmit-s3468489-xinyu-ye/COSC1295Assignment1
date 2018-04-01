@@ -37,7 +37,7 @@ public class Adult extends User
         return children;
     }
     
-    public void addChildren(Dependent child) 
+    public void addChild(Dependent child) 
     {
         children.add(child);
     }
@@ -52,18 +52,18 @@ public class Adult extends User
         StringBuilder result = new StringBuilder(commonInfo);
         
         if (!(spouse == null))
-            result.append("\nSpouse: ")
+            result.append("\n\t\t\tSpouse: ")
                     .append(this.spouse.name);
         
-        result.append("\nChild(ren):");
+        result.append("\n\t\t\tChild(ren):");
         
         if (!nokid) 
         {
             for (Dependent kid : children)
-                result.append("\n\t").append(kid.getName());
+                result.append("\t").append(kid.getName());
         }
         else 
-        		result.append("\n\t\t\tThis user does not have any children.");
+        		result.append("This user does not have any children");
         
         return result.toString();        
     }

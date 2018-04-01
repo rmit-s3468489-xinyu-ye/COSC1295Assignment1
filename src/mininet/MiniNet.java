@@ -31,7 +31,7 @@ public class MiniNet
         {
             case Interaction.EXIT:
             		FileOperation.writeToFile();
-                System.exit(0);
+            		System.exit(0);
                 break;
             case Interaction.LIST_EXISTED_USERS:
                 driver.listExitedUsers();

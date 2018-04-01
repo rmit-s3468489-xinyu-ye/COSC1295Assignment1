@@ -43,9 +43,11 @@ public class FileOperation
 					break;
 				}  
 				args = line.split(",");
-				
-				if(Integer.parseInt(args[1]) > 16)
+				System.out.println(args[1]);
+				if (Integer.parseInt(args[1]) > 16) 
+				{
 					existedUsers.add(new Adult(args[0], Integer.parseInt(args[1]), args[2], args[3]));
+				}					
 				else
 				{
 					Adult[] parents = new Adult[2];

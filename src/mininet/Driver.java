@@ -30,8 +30,9 @@ public class Driver
 	public void listExitedUsers() 
 	{
 		int counter = 1;
-		StringBuffer buffer = new StringBuffer("\n\t\t\tThe existed users in MiniNet:\n");
-		for (User u : theMininet){
+		StringBuffer buffer = new StringBuffer("\n\t\t\tThe existed users in MiniNet: \n\n");
+		for (User u : theMininet)
+		{
 			buffer.append("\t\t").append(u.getName());
 
 		}
@@ -75,10 +76,10 @@ public class Driver
 				case Interaction.SET_PHOTO:
 					setPhoto();
 					break;
-				case Interaction.MAKE_FRIEND:
+				case Interaction.MAKE_FRIENDS:
 					makeFriends();
 					break;
-				case Interaction.DEL_FRIEND:
+				case Interaction.DELETE_FRIEND:
 					deleteFriend();
 					break;
 				case Interaction.SET_SPOUSE:
@@ -93,10 +94,10 @@ public class Driver
 				case Interaction.CHANGE_STATUS:
 					updateStatus();
 					break;
-				case Interaction.FINDOUTCHILDREN:
+				case Interaction.FINDOUT_CHILDREN:
 					searchChildren();
 					break;
-				case Interaction.FINDOUTPARENTS:
+				case Interaction.FINDOUT_PARENTS:
 					searchParents();
 					break;
 				}
@@ -137,7 +138,7 @@ public class Driver
 		int age;
 
 		String[] input;
-		input = menuOperation.readAndCall(Interaction.ADD_USER);
+		input = menuOperation.readAndInvoke(Interaction.ADD_USER);
 		name = input[0];        
 		age = Integer.parseInt(input[1]);
 		photoPath = input[2];
@@ -182,7 +183,7 @@ public class Driver
 	public void setPhoto() 
 	{
 
-		System.out.println("\n\t\t\tPlease set your photo path (for example: src/yourname.jpg)");
+		System.out.println("\n\t\t\tPlease set your photo path (e.g., src/yourname.jpg)");
 		String input = sc.next();
 		selectedUser.setPhotoPath(input);
 		return; 
@@ -352,7 +353,7 @@ public class Driver
             if(!children.isEmpty())
             {
                 hasChildren = true;
-                System.out.println("The children list of the selected user: ");
+                System.out.println("\n\t\t\tThe children list of the selected user: ");
                 
                 for (int i = 0; i < children.size(); i++)
                 {
@@ -361,11 +362,11 @@ public class Driver
                 }
             }
             else
-                System.out.println("This user does not have any children");
+                System.out.println("\n\t\t\tThis user does not have any children");
         }
         
         if (selectedUser instanceof Dependent)
-            System.out.println("A dependent does not have any children");
+            System.out.println("\n\t\tA dependent does not have any children");
     }
     
     //Find out a particular user's parents
@@ -449,7 +450,7 @@ public class Driver
 				((Adult) user2).setSpouse(user1);
 			}
 			else
-				System.out.println("One or more users already have a spouse, "
+				System.out.println("\n\t\t\tOne or more users already have a spouse, "
 						+ "failed to set spouse to each other");
 		}
 	}
@@ -584,7 +585,7 @@ public class Driver
 				}
 				if(flag)
 				{
-					((Adult)selectedUser).addChildren((Dependent)getUserByName(childName));
+					((Adult)selectedUser).addChild((Dependent)getUserByName(childName));
 					System.out.println("\n\t\t\tSuccessfully set " + childName
 							+ " as a child of " + selectedUser.getName());
 					break;
@@ -598,7 +599,7 @@ public class Driver
 
 	public void updateStatus() 
 	{       
-		System.out.println("\n\t\t\tPlease update the status for the selected user:");
+		System.out.println("\n\t\t\tPlease update the status for" + selectedUser.getName() + ": ");
 		String input = sc.next();
 		selectedUser.setStatus(input);
 		return;      
@@ -644,7 +645,7 @@ public class Driver
 			
 			//add the dependent to the two parent objects
 			for (Adult parent: parents)
-				parent.addChildren(kid);
+				parent.addChild(kid);
 			
 			System.out.println("\n\t\t\tThis dependent is successfully"
 					+ " added into MiniNet.");
