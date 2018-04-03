@@ -43,7 +43,7 @@ public class FileOperation
 					break;
 				}  
 				args = line.split(",");
-				System.out.println(args[1]);
+				
 				if (Integer.parseInt(args[1]) > 16) 
 				{
 					existedUsers.add(new Adult(args[0], Integer.parseInt(args[1]), args[2], args[3]));
